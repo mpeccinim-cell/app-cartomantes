@@ -1,118 +1,33 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-br">
 <head>
   <meta charset="UTF-8">
-  <title>App para Cartomantes</title>
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
-  <style>
-    body {
-      font-family: Arial, sans-serif;
-      background: #1b1026;
-      color: white;
-      text-align: center;
-      margin: 0;
-      padding: 20px;
-    }
-
-    h1 {
-      color: #ffccff;
-    }
-
-    .card {
-      background: #2e1a47;
-      padding: 20px;
-      margin: 15px auto;
-      border-radius: 12px;
-      max-width: 400px;
-    }
-
-    button {
-      width: 100%;
-      padding: 12px;
-      margin-top: 10px;
-      border: none;
-      border-radius: 8px;
-      background: #ff66cc;
-      color: black;
-      font-size: 16px;
-      cursor: pointer;
-    }
-
-    button:hover {
-      background: #ff99dd;
-    }
-  </style>
+  <title>App Cartomantes</title>
 </head>
-
 <body>
 
-  <h1>🔮 App para Cartomantes</h1>
+  <h1>🔥 App Cartomantes</h1>
+  <p>Firebase conectado com sucesso!</p>
 
-  <div class="card">
-    <h2>Quem você é?</h2>
-    <button onclick="visitante()">Visitante</button>
-    <button onclick="cartomante()">Cartomante</button>
-  </div>
+  <script type="module">
+    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
+    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
 
-  <div class="card" id="conteudo"></div>
+    const firebaseConfig = {
+      apiKey: "AIzaSyB3SM6ELt6T1lsVv1T9MzRjs3d3g_ybaQs",
+      authDomain: "app-cartomantes.firebaseapp.com",
+      projectId: "app-cartomantes",
+      storageBucket: "app-cartomantes.firebasestorage.app",
+      messagingSenderId: "68719285382",
+      appId: "1:68719285382:web:1a3bc96dceba8e9b5fed07",
+      measurementId: "G-8ZTK69WBCZ"
+    };
 
-  <script>
-    function visitante() {
-      document.getElementById("conteudo").innerHTML = `
-        <h3>Escolha o tipo de consulta</h3>
-        <p>⭐ Avaliações aparecem antes do pagamento</p>
+    const app = initializeApp(firebaseConfig);
+    const analytics = getAnalytics(app);
 
-        <button>1 pergunta – R$17</button>
-        <button>3 perguntas – R$36</button>
-        <button>5 perguntas – R$53</button>
-        <button>Tema + perguntas – R$71</button>
-        <button>Perguntas ilimitadas – R$173</button>
-
-        <p style="margin-top:10px;">
-          Após escolher, envie o comprovante.
-        </p>
-      `;
-    }
-
-    function cartomante() {
-      document.getElementById("conteudo").innerHTML = `
-        <h3>Área do Cartomante</h3>
-        <p>⚠️ Em breve</p>
-        <p>Você verá o tipo de consulta escolhida<br>
-        e aguardará o comprovante do cliente.</p>
-      `;
-    }
+    console.log("🔥 Firebase conectado!");
   </script>
 
 </body>
 </html>
-<hr>
-
-<h2>Avaliação do Cartomante</h2>
-
-<p>Nome do cartomante:</p>
-<select id="cartomante">
-  <option>Mística Lua</option>
-  <option>Tarô do Destino</option>
-  <option>Oráculo Estelar</option>
-</select>
-
-<p>Avalie:</p>
-
-<div id="estrelas">
-  <span onclick="avaliar(1)">⭐</span>
-  <span onclick="avaliar(2)">⭐</span>
-  <span onclick="avaliar(3)">⭐</span>
-  <span onclick="avaliar(4)">⭐</span>
-  <span onclick="avaliar(5)">⭐</span>
-</div>
-
-<p id="resultado"></p>
-
-<script>
-function avaliar(nota){
-  document.getElementById("resultado").innerText =
-  "Avaliação enviada: " + nota + " estrelas ⭐";
-}
-</script>
