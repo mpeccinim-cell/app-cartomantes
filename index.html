@@ -1,33 +1,176 @@
 <!DOCTYPE html>
-<html lang="pt-br">
+<html lang="pt-BR">
 <head>
-  <meta charset="UTF-8">
-  <title>App Cartomantes</title>
+<meta charset="UTF-8">
+<title>🔮 App Cartomantes</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<style>
+body{
+  margin:0;
+  font-family: Arial, sans-serif;
+  background: linear-gradient(135deg,#3a005f,#000);
+  color:#fff;
+}
+.tela{
+  display:none;
+  padding:20px;
+  max-width:500px;
+  margin:auto;
+}
+.ativa{ display:block; }
+h1,h2{text-align:center;}
+button,input{
+  width:100%;
+  padding:12px;
+  margin:8px 0;
+  font-size:15px;
+  border:none;
+  border-radius:8px;
+}
+button{ cursor:pointer; }
+.cartomante{ background:#ff9800; color:#000;}
+.visitante{ background:#03a9f4; color:#000;}
+.voltar{ background:#555; color:#fff;}
+.pacote{ background:#1e1e1e; color:#fff;}
+.card{
+  background:rgba(0,0,0,0.5);
+  padding:15px;
+  border-radius:10px;
+  margin-bottom:15px;
+}
+.chat{
+  background:#111;
+  padding:10px;
+  border-radius:8px;
+  max-height:200px;
+  overflow-y:auto;
+  font-size:14px;
+}
+.msg{ margin-bottom:8px; }
+.msg b{ color:#00ffcc; }
+img{
+  max-width:100%;
+  border-radius:6px;
+  margin-top:5px;
+}
+</style>
 </head>
+
 <body>
 
-  <h1>🔥 App Cartomantes</h1>
-  <p>Firebase conectado com sucesso!</p>
+<!-- INÍCIO -->
+<div class="tela ativa" id="inicio">
+  <h1>🔮 App Cartomantes</h1>
+  <button class="cartomante" onclick="abrir('cartomante')">Sou Cartomante</button>
+  <button class="visitante" onclick="abrir('visitante')">Sou Visitante</button>
+</div>
 
-  <script type="module">
-    import { initializeApp } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-app.js";
-    import { getAnalytics } from "https://www.gstatic.com/firebasejs/12.7.0/firebase-analytics.js";
+<!-- VISITANTE -->
+<div class="tela" id="visitante">
+  <h2>🙋 Visitante</h2>
 
-    const firebaseConfig = {
-      apiKey: "AIzaSyB3SM6ELt6T1lsVv1T9MzRjs3d3g_ybaQs",
-      authDomain: "app-cartomantes.firebaseapp.com",
-      projectId: "app-cartomantes",
-      storageBucket: "app-cartomantes.firebasestorage.app",
-      messagingSenderId: "68719285382",
-      appId: "1:68719285382:web:1a3bc96dceba8e9b5fed07",
-      measurementId: "G-8ZTK69WBCZ"
-    };
+  <div class="card">
+    <p>🧙 Cartomante: <b>Lua Mística</b></p>
+    <p>⭐ Avaliação: <b>4.8</b></p>
+  </div>
 
-    const app = initializeApp(firebaseConfig);
-    const analytics = getAnalytics(app);
+  <div class="card">
+    <button class="pacote" onclick="escolherPacote('1 pergunta',17)">1 pergunta – R$17</button>
+    <button class="pacote" onclick="escolherPacote('3 perguntas',36)">3 perguntas – R$36</button>
+    <button class="pacote" onclick="escolherPacote('5 perguntas',53)">5 perguntas – R$53</button>
+    <button class="pacote" onclick="escolherPacote('Tema escolhido',71)">Tema – R$71</button>
+    <button class="pacote" onclick="escolherPacote('Ilimitado',173)">Ilimitado – R$173</button>
+  </div>
 
-    console.log("🔥 Firebase conectado!");
-  </script>
+  <button onclick="abrir('chat')">💬 Abrir Chat</button>
+  <button class="voltar" onclick="abrir('inicio')">⬅ Voltar</button>
+</div>
+
+<!-- CHAT -->
+<div class="tela" id="chat">
+  <h2>💬 Chat</h2>
+
+  <div class="chat" id="chatBox"></div>
+
+  <input type="text" id="mensagem" placeholder="Digite sua mensagem">
+  <button onclick="enviarMensagem()">Enviar mensagem</button>
+
+  <input type="file" accept="image/*" onchange="enviarComprovante(event)">
+  <p><small>📸 Envie o comprovante aqui</small></p>
+
+  <button class="voltar" onclick="abrir('visitante')">⬅ Voltar</button>
+</div>
+
+<!-- CARTOMANTE -->
+<div class="tela" id="cartomante">
+  <h2>🧙 Área do Cartomante</h2>
+  <div class="card">
+    <p>Aqui o cartomante verá:</p>
+    <ul>
+      <li>Mensagens do visitante</li>
+      <li>Comprovante enviado</li>
+      <li>Valor e comissão (10%)</li>
+    </ul>
+  </div>
+  <button class="voltar" onclick="abrir('inicio')">⬅ Voltar</button>
+</div>
+
+<!-- FIREBASE (PRONTO PRA PLAY STORE) -->
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-app-compat.js"></script>
+<script src="https://www.gstatic.com/firebasejs/9.23.0/firebase-analytics-compat.js"></script>
+
+<script>
+firebase.initializeApp({
+  apiKey: "AIzaSyB3SM6ELt6T1lsVv1T9MzRjs3d3g_ybaQs",
+  authDomain: "app-cartomantes.firebaseapp.com",
+  projectId: "app-cartomantes",
+  storageBucket: "app-cartomantes.firebasestorage.app",
+  messagingSenderId: "68719285382",
+  appId: "1:68719285382:web:1a3bc96dceba8e9b5fed07",
+  measurementId: "G-8ZTK69WBCZ"
+});
+firebase.analytics();
+</script>
+
+<!-- LÓGICA -->
+<script>
+function abrir(id){
+  document.querySelectorAll('.tela').forEach(t=>t.classList.remove('ativa'));
+  document.getElementById(id).classList.add('ativa');
+}
+
+function escolherPacote(tipo, valor){
+  const comissao = (valor * 0.10).toFixed(2);
+  const cartomante = (valor - comissao).toFixed(2);
+
+  alert(
+    tipo + "\n\nValor: R$" + valor +
+    "\nComissão (10%): R$" + comissao +
+    "\nCartomante recebe: R$" + cartomante +
+    "\n\nPague e envie o comprovante no chat."
+  );
+}
+
+function enviarMensagem(){
+  const texto = document.getElementById("mensagem").value;
+  if(!texto) return;
+  const chat = document.getElementById("chatBox");
+  chat.innerHTML += `<div class="msg"><b>Visitante:</b> ${texto}</div>`;
+  document.getElementById("mensagem").value = "";
+}
+
+function enviarComprovante(event){
+  const file = event.target.files[0];
+  if(!file) return;
+  const reader = new FileReader();
+  reader.onload = function(e){
+    document.getElementById("chatBox").innerHTML +=
+      `<div class="msg"><b>Comprovante:</b><br><img src="${e.target.result}"></div>`;
+  };
+  reader.readAsDataURL(file);
+}
+</script>
 
 </body>
 </html>
