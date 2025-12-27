@@ -87,3 +87,32 @@
 
 </body>
 </html>
+<hr>
+
+<h2>Avaliação do Cartomante</h2>
+
+<p>Nome do cartomante:</p>
+<select id="cartomante">
+  <option>Mística Lua</option>
+  <option>Tarô do Destino</option>
+  <option>Oráculo Estelar</option>
+</select>
+
+<p>Avalie:</p>
+
+<div id="estrelas">
+  <span onclick="avaliar(1)">⭐</span>
+  <span onclick="avaliar(2)">⭐</span>
+  <span onclick="avaliar(3)">⭐</span>
+  <span onclick="avaliar(4)">⭐</span>
+  <span onclick="avaliar(5)">⭐</span>
+</div>
+
+<p id="resultado"></p>
+
+<script>
+function avaliar(nota){
+  document.getElementById("resultado").innerText =
+  "Avaliação enviada: " + nota + " estrelas ⭐";
+}
+</script>
